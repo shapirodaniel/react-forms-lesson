@@ -7,7 +7,7 @@ CREATE TABLE users (
 
 CREATE TABLE addresses (
   id SERIAL PRIMARY KEY,
-  street_number INTEGER NOT NULL,
+  street_number VARCHAR(255) NOT NULL,
   street_address TEXT NOT NULL,
   city_name VARCHAR(255) NOT NULL,
   state_abbrev_name VARCHAR(2),
