@@ -4,7 +4,7 @@ Welcome to React Forms! This repo demos a controlled React form, with full backe
 
 ## Getting Started
 
-Fork and clone this repo to your local machine, then `$ npm i` to install dependencies. `$ createdb react-forms-demo` and `$ psql react-forms-demo`, then run `$ npm run db:build` to seed the database.
+Fork and clone this repo to your local machine, then `$ npm i` to install dependencies. `$ createdb react-forms-demo`, then run `$ npm run db:build` to seed the database.
 
 ## What's Inside
 
