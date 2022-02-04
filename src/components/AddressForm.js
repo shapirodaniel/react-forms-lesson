@@ -47,7 +47,7 @@ class AddressForm extends React.Component {
 
     try {
       await this.props.addUserAddress(this.props.user.id, this.state.form);
-      this.setState({ form: {} });
+      this.setState({ form: { ...initForm } });
     } catch (err) {
       console.error(err);
     }
