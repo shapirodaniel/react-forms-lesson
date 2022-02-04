@@ -46,3 +46,40 @@ usersRouter.post('/:userId/addresses', async (req, res, next) => {
     next(err);
   }
 });
+
+function destructureRequestBody(req) {
+  const fields = {
+    street_number: 'street_number',
+    street_address: 'street_address',
+    city_name: 'city_name',
+    state_abbrev_name: 'state_abbrev_name',
+    country_name: 'country_name',
+    zipcode: 'zipcode',
+    domicile_type: 'domicile_type',
+    is_primary: 'is_primary',
+  };
+
+  const updateFields = Object.keys(fields).reduce((acc, key) => {
+    if (req.body[key]) {
+      acc[key] = req.body[key];
+    }
+    return acc;
+  }, {});
+
+  return updateFields;
+}
+
+usersRouter.patch('/:userId/addresses/:addressId', async (req, res, next) => {
+  try {
+    const updateFields = destructureRequestBody(req);
+
+    const updatedAddress = await Address.updateAddress(
+      req.params.addressId,
+      updateFields
+    );
+
+    res.send(updatedAddress);
+  } catch (err) {
+    next(err);
+  }
+});

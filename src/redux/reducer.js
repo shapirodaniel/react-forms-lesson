@@ -43,7 +43,9 @@ export const thunkAddUserAddress =
     dispatch(addUserAddress(newAddress));
   };
 
-export default function (state = {}, { type, payload }) {
+const initState = { id: null, username: null, addresses: [] };
+
+export default function (state = initState, { type, payload }) {
   switch (type) {
     case GET_USER:
       return payload;
