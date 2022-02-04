@@ -1,53 +1,18 @@
 import React from 'react';
+import { Form } from '../style/layout';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 import { thunkAddUserAddress } from '../redux/reducer';
 
 const formFields = [
-  { id: 0, type: 'text', name: 'street_number' },
-  { id: 1, type: 'text', name: 'street_address' },
-  { id: 2, type: 'text', name: 'city_name' },
-  { id: 3, type: 'text', name: 'state_abbrev_name' },
-  { id: 4, type: 'text', name: 'country_name' },
-  { id: 5, type: 'text', name: 'zipcode' },
-  { id: 6, type: 'text', name: 'domicile_type' },
-  { id: 7, type: 'checkbox', name: 'is_primary' },
+  { id: 1, type: 'text', name: 'street_number' },
+  { id: 2, type: 'text', name: 'street_address' },
+  { id: 3, type: 'text', name: 'city_name' },
+  { id: 4, type: 'text', name: 'state_abbrev_name' },
+  { id: 5, type: 'text', name: 'country_name' },
+  { id: 6, type: 'text', name: 'zipcode' },
+  { id: 7, type: 'text', name: 'domicile_type' },
+  { id: 8, type: 'checkbox', name: 'is_primary' },
 ];
-
-const Form = styled.form`
-  & {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-between;
-    width: 100%;
-    height: auto;
-  }
-  & > div {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    margin-bottom: 10px;
-  }
-  & > div.horiz {
-    flex-direction: row;
-    width: 100%;
-  }
-  & input[type='text'] {
-    border: 1px solid lightgrey;
-    padding: 4px;
-    border-radius: 4px;
-    margin: 4px 0;
-  }
-  & input[type='checkbox'] {
-    margin-left: 10px;
-  }
-  & input[type='submit'] {
-    padding: 4px;
-    width: 156px;
-  }
-`;
 
 const initForm = {
   street_number: '',

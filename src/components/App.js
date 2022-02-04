@@ -7,27 +7,14 @@ import {
 } from '../redux/reducer';
 import AddressCard from './AddressCard';
 import AddressForm from './AddressForm';
-import { Container } from '../style/layout/';
-import styled from 'styled-components';
-
-const TwoColumnLayout = styled.section`
-  display: flex;
-  width: 100%;
-`;
-
-const Addresses = styled.div`
-  & {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-  }
-  & > div {
-    margin: 4px;
-  }
-`;
+import { Container, TwoColumnLayout, Addresses } from '../style/layout/';
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.formatUsername = this.formatUsername.bind(this);
+  }
+
   componentDidMount() {
     this.props.getUser(1);
   }
@@ -38,6 +25,10 @@ class App extends React.Component {
     });
   }
 
+  formatUsername(username) {
+    return username[0].toUpperCase() + username.slice(1);
+  }
+
   render() {
     const { user } = this.props;
     const { username, addresses } = user || {};
@@ -46,7 +37,7 @@ class App extends React.Component {
 
     return (
       <Container>
-        <h2>Welcome {username[0].toUpperCase() + username.slice(1)}</h2>
+        <h2>Welcome {this.formatUsername(username)}</h2>
         <TwoColumnLayout>
           <AddressForm />
           <Addresses>

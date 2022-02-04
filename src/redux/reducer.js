@@ -1,5 +1,4 @@
 const GET_USER = 'GET_USER';
-const UPDATE_USER_ADDRESS = 'UPDATE_USER_ADDRESS';
 const ADD_USER_ADDRESS = 'ADD_USER_ADDRESS';
 
 const getUser = (user) => ({

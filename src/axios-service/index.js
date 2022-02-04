@@ -19,7 +19,6 @@ class AxiosService {
       `/api/users/${userId}/addresses/${addressId}`,
       updateFields
     );
-
     const updatedUser = await this.getUserAndAddresses(userId);
     return updatedUser;
   }

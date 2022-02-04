@@ -76,8 +76,6 @@ function buildSetString(fields, offset = 1) {
   return setString;
 }
 
-// quite possibly the ugliest and most inefficient
-// primary address update ever?
 async function updateAddress(id, addressFields) {
   try {
     let address;
