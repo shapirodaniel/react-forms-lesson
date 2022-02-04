@@ -76,28 +76,50 @@ function buildSetString(fields, offset = 1) {
   return setString;
 }
 
+// quite possibly the ugliest and most inefficient
+// primary address update ever?
 async function updateAddress(id, addressFields) {
   try {
+    let address;
     const { is_primary } = addressFields;
-
     delete addressFields.is_primary;
 
-    const setString = buildSetString(addressFields, 2);
+    if (Object.values(addressFields).length) {
+      const setString = buildSetString(addressFields, 2);
 
-    const {
-      rows: [address],
-    } = await client.query(
-      `
+      const {
+        rows: [updatedAddress],
+      } = await client.query(
+        `
       UPDATE addresses 
       SET ${setString}
       WHERE addresses.id=$1
       RETURNING *;
     `,
-      [id, ...Object.values(addressFields)]
-    );
+        [id, ...Object.values(addressFields)]
+      );
+
+      address = updatedAddress;
+    }
+
+    if (!address) {
+      const {
+        rows: [unchangedAddress],
+      } = await client.query(
+        `
+        SELECT * FROM addresses
+        WHERE addresses.id=$1;
+      `,
+        [id]
+      );
+
+      address = unchangedAddress;
+    }
 
     if (is_primary !== undefined) {
-      await client.query(
+      const {
+        rows: [updatedUserAddress],
+      } = await client.query(
         `
         UPDATE user_addresses AS ua
         SET is_primary=$1
@@ -106,6 +128,13 @@ async function updateAddress(id, addressFields) {
       `,
         [is_primary]
       );
+
+      await client.query(`
+        UPDATE user_addresses AS ua
+        SET is_primary='false'
+        WHERE ua.address_id!=${address.id}
+          AND ua.user_id=${updatedUserAddress.user_id}
+      `);
     }
 
     return address;

@@ -7,11 +7,6 @@ const getUser = (user) => ({
   payload: user,
 });
 
-const updateUserAddress = (updateFields) => ({
-  type: UPDATE_USER_ADDRESS,
-  payload: updateFields,
-});
-
 const addUserAddress = (address) => ({
   type: ADD_USER_ADDRESS,
   payload: address,
@@ -26,12 +21,9 @@ export const thunkGetUser =
 export const thunkUpdateUserAddress =
   (userId, addressId, updateFields) =>
   async (dispatch, getState, axiosService) => {
-    const updatedUserAddress = await axiosService.updateUserAddress(
-      userId,
-      addressId,
-      updateFields
-    );
-    dispatch(updateUserAddress(updatedUserAddress));
+    const updatedUserInstanceWithAddresses =
+      await axiosService.updateUserAddress(userId, addressId, updateFields);
+    dispatch(getUser(updatedUserInstanceWithAddresses));
   };
 
 export const thunkAddUserAddress =
@@ -51,13 +43,6 @@ export default function (state = initState, { type, payload }) {
       return payload;
     case ADD_USER_ADDRESS:
       return { ...state, addresses: [...state.addresses, payload] };
-    case UPDATE_USER_ADDRESS:
-      return {
-        ...state,
-        addresses: state.addresses.map((adr) =>
-          adr.id === payload.id ? payload : adr
-        ),
-      };
     default:
       return state;
   }
