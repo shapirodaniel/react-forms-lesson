@@ -47,11 +47,11 @@ async function createAddress(addressFields, userAddressFields) {
 
     await client.query(
       `
-    INSERT INTO user_addresses (is_primary, user_id, address_id)
+    INSERT INTO user_addresses (user_id, address_id, is_primary)
     VALUES ($1, $2, $3)
     RETURNING *;
   `,
-      [...Object.values(userAddressFields), address.id]
+      [userAddressFields.user_id, address.id, userAddressFields.is_primary]
     );
 
     return address;
