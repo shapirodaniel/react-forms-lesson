@@ -6,16 +6,28 @@ import {
   thunkUpdateUserAddress,
 } from '../redux/reducer';
 import AddressCard from './AddressCard';
+import AddressForm from './AddressForm';
 import { Container } from '../style/layout/';
+import styled from 'styled-components';
+
+const TwoColumnLayout = styled.section`
+  display: flex;
+  width: 100%;
+`;
+
+const Addresses = styled.div`
+  & {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  & > div {
+    margin: 4px;
+  }
+`;
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      form: {},
-    };
-  }
-
   componentDidMount() {
     this.props.getUser(1);
   }
@@ -30,20 +42,25 @@ class App extends React.Component {
     const { user } = this.props;
     const { username, addresses } = user || {};
 
-    if (!addresses) return null;
+    if (!username || !addresses) return null;
 
     return (
       <Container>
-        <h1>Welcome {username}</h1>
-        {addresses.map((address) => (
-          <AddressCard
-            key={address.id}
-            address={address}
-            setPrimaryAddress={() =>
-              this.setPrimaryAddress(user.id, address.id)
-            }
-          />
-        ))}
+        <h2>Welcome {username[0].toUpperCase() + username.slice(1)}</h2>
+        <TwoColumnLayout>
+          <AddressForm />
+          <Addresses>
+            {addresses.map((address) => (
+              <AddressCard
+                key={address.id}
+                address={address}
+                setPrimaryAddress={() =>
+                  this.setPrimaryAddress(user.id, address.id)
+                }
+              />
+            ))}
+          </Addresses>
+        </TwoColumnLayout>
       </Container>
     );
   }

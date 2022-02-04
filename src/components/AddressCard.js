@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
 
 const AddressCardContainer = styled.div`
   display: flex;
@@ -8,11 +7,13 @@ const AddressCardContainer = styled.div`
   align-items: flex-start;
   justify-content: center;
   height: auto;
-  width: 280px;
+  min-height: 80px;
+  min-width: 220px;
   padding: 20px;
-  margin: 10px;
+  font-size: 12px;
   border-radius: 4px;
-  border: ${({ isPrimary }) => isPrimary && '2px solid blue'};
+  border: ${({ isPrimary }) =>
+    isPrimary ? '2px solid blue' : '1px solid lightgrey'};
 `;
 
 // passing down setPrimaryAddress from parent to trigger render on update

@@ -15,15 +15,13 @@ class AxiosService {
   }
 
   async updateUserAddress(userId, addressId, updateFields) {
-    const { status } = await axios.patch(
+    await axios.patch(
       `/api/users/${userId}/addresses/${addressId}`,
       updateFields
     );
 
-    if (status === 200) {
-      const updatedUser = await this.getUserAndAddresses(userId);
-      return updatedUser;
-    }
+    const updatedUser = await this.getUserAndAddresses(userId);
+    return updatedUser;
   }
 }
 
